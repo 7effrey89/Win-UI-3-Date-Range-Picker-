@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WinUi3Sandbox (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUi3Sandbox (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
