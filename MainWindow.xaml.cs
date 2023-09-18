@@ -116,20 +116,38 @@ namespace WinUi3Sandbox
 
                 //If the current low bound and high bound are the same, it means there is only one date selected.
                 //We then try to identify if it should be a lower or higher bound
-                if (currentLowBound.Equals(currentHighBound))
+                if (DateSelections.Count == 1)
                 {
-                    if (selectedValue < DateSelections[0])
+                    if (selectedValue != DateSelections[0])
                     {
-                        currentLowBound = selectedValue;
+                        //Determine if the new selection should be low or high bound
+                        if (selectedValue < DateSelections[0])
+                        {
+                            currentLowBound = selectedValue;
+                        }
+                        else
+                        {
+                            currentHighBound = selectedValue;
+                        }
                     }
                     else
                     {
-                        currentHighBound = selectedValue;
+                        //if there was only 1 selected item and it was clicked again, clear the selection
+                        if (currentLowBound.Equals(currentHighBound))
+                        {
+                            currentLowBound = DateTimeOffset.MinValue;
+                            currentHighBound = DateTimeOffset.MinValue;
+                            DateSelections.Clear();
+                            return;
+                        }
                     }
+
                 }
+
                 else //For all other cases
                 {
-                    if(selectedValue == currentLowBound || selectedValue == currentHighBound)
+                    //if user clicks on either low or high bound, remove everything else than the selected bound
+                    if (selectedValue == currentLowBound || selectedValue == currentHighBound)
                     {
                         currentLowBound = selectedValue;
                         currentHighBound = selectedValue;
@@ -183,7 +201,7 @@ namespace WinUi3Sandbox
 
                     DateSelections.Add(selectedValue);
                 }
-                
+
             }
         }
     }
